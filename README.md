@@ -1,4 +1,5 @@
 # S3-Static-Website-with-CloudFront-CDN
+
 # 🌍 AWS Project – S3 Static Website with CloudFront CDN
 
 ## 🧠 Overview
@@ -16,8 +17,9 @@ It’s part of my **“30 Days of AWS Projects”** challenge — one project ev
 ---
 
 ## 🧱 AWS Services Used
+
 | Service | Purpose |
-|----------|----------|
+|---------|---------|
 | **Amazon S3** | Stores website files (HTML, CSS, JS) |
 | **Amazon CloudFront** | CDN to cache and serve content globally |
 | **IAM** | Controls permissions and bucket access |
@@ -27,18 +29,22 @@ It’s part of my **“30 Days of AWS Projects”** challenge — one project ev
 ## 🪄 Steps to Deploy
 
 ### 1️⃣ Create an S3 Bucket
-1. Go to **S3 Console → Create bucket**
-2. Name: `joy-static-site-demo` *(must be globally unique)*
-3. Uncheck **Block all public access**
+1. Go to **S3 Console → Create bucket**  
+2. Name: `joy-static-site-demo` *(must be globally unique)*  
+3. Uncheck **Block all public access**  
 4. Create bucket
 
 ### 2️⃣ Upload Website Files
 Upload files such as:
-```plaintext
+
+```
 index.html
 style.css
+```
 
 Example index.html:
+
+```html
 <html>
   <head><title>AWS S3 + CloudFront Demo</title></head>
   <body style="text-align:center;font-family:sans-serif;">
@@ -46,22 +52,21 @@ Example index.html:
     <p>Part of my 30 Days AWS Projects Challenge</p>
   </body>
 </html>
-3️⃣ Enable Static Website Hosting
+```
 
+### 3️⃣ Enable Static Website Hosting
 Go to Properties → Static website hosting
 
-Enable hosting
+- Enable hosting
+- Set Index document to `index.html`
+- Copy your S3 website endpoint, e.g.
 
-Set Index document to index.html
+`http://joy-static-site-demo.s3-website.ca-central-1.amazonaws.com/`
 
-Copy your S3 website endpoint, e.g.
-
-http://joy-static-site-demo.s3-website.ca-central-1.amazonaws.com/
-
-4️⃣ Add Bucket Policy for Public Read
-
+### 4️⃣ Add Bucket Policy for Public Read
 Go to Permissions → Bucket policy, paste:
 
+```json
 {
   "Version": "2012-10-17",
   "Statement": [
@@ -74,78 +79,67 @@ Go to Permissions → Bucket policy, paste:
     }
   ]
 }
+```
 
-5️⃣ Create CloudFront Distribution
-
-Go to CloudFront → Create distribution
-
-Origin domain: your S3 website endpoint
-Example: joy-static-site-demo.s3-website.ca-central-1.amazonaws.com
-
-Origin protocol policy: HTTP only
-
-Distribution type: Single website or app
-
-Create distribution
-
-Wait for status = ✅ Deployed
+### 5️⃣ Create CloudFront Distribution
+- Go to CloudFront → Create distribution
+- Origin domain: your S3 website endpoint  
+  Example: `joy-static-site-demo.s3-website.ca-central-1.amazonaws.com`
+- Origin protocol policy: HTTP only
+- Distribution type: Single website or app
+- Create distribution
+- Wait for status = ✅ Deployed
 
 Open CloudFront URL:
 
-https://dxxxxx.cloudfront.net
+`https://dxxxxx.cloudfront.net`
 
-6️⃣ (Optional) Invalidate Cache
-
+### 6️⃣ (Optional) Invalidate Cache
 To refresh updates:
 
-CloudFront → Invalidations → Create invalidation → /*
+CloudFront → Invalidations → Create invalidation → `/*`
+
+---
 
 🧩 Architecture
 
 User → CloudFront (CDN) → S3 Bucket (Static Website)
 
+---
+
 💰 Cost & Optimization
-Service	Free Tier	Est. Monthly Cost	Notes
-S3	✅ 5 GB free + 20k GET requests	$0 – $0.50	Use small files
-CloudFront	✅ 1 TB data transfer out (12 months)	$0 – $1	Delete after testing
-IAM	✅ Always free	-	-
-Total (approx)		$0 – $1/month	
-Cost Tips			- Delete CloudFront after testing
+
+| Service | Free Tier | Est. Monthly Cost | Notes |
+|---------|----------:|------------------:|-------|
+| S3 | ✅ 5 GB free + 20k GET requests | $0 – $0.50 | Use small files |
+| CloudFront | ✅ 1 TB data transfer out (12 months) | $0 – $1 | Delete after testing |
+| IAM | ✅ Always free | - | - |
+| **Total (approx)** |  | $0 – $1/month |  |
+
+Cost Tips
+- Delete CloudFront after testing
 - Don’t store large files
 - Use .jpg for images
+
+---
+
 ✅ Learning Outcomes
+- How S3 static hosting works
+- How to integrate CloudFront for HTTPS + CDN caching
+- How to configure permissions and bucket policies
+- How to manage cost-efficient hosting on AWS
 
-How S3 static hosting works
-
-How to integrate CloudFront for HTTPS + CDN caching
-
-How to configure permissions and bucket policies
-
-How to manage cost-efficient hosting on AWS
+---
 
 🧹 Cleanup
-
 To avoid charges:
+- Delete CloudFront distribution
+- Delete S3 bucket and objects
 
-Delete CloudFront distribution
-
-Delete S3 bucket and objects
+---
 
 💼 Author
 
-👨‍💻 Iftekhar Joy
-AWS + DevOps + AI Engineer
+👨‍💻 Iftekhar Joy  
+AWS + DevOps + AI Engineer  
 Project 1 of 30 in my “30 Days of AWS Projects” Challenge
-
-
-
-
-
-
-
-
-
-
-
-
-
